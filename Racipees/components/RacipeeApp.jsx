@@ -5,19 +5,22 @@ const RecipeApp = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [recipes, setRecipes] = useState([]);
 
-  const fetchRecipes = async () => {
-    try {
-      const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`);
-      const data = response.data;
-      setRecipes(data.meals);
-    } catch (error) {
-      console.error('Error fetching recipes:', error);
-    }
+  const fetchRecipes =  () => {
+      axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`)
+      .then((res => {
+        const data = res.data;
+        setRecipes(data.meals);
+      }))
+      .catch (error=> {
+      console.log('Error fetching recipes:', error);
+    })
   }
 
   const handleSearch = () => {
     if (searchTerm !== '') {
       fetchRecipes();
+    }else{
+      alert('please fill a valid dish name')
     }
   };
 
